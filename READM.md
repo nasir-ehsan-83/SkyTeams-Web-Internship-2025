@@ -26,7 +26,6 @@ SkyTeams-Web-Internship-2025-NasirAhmadEhsan
 │   ├── backend
 │   │   ├── app
 │   │   ├── fastapi_offline_docs
-│   │   ├── fsapi
 │   │   └── requirements.txt
 │   │
 │   └── frontend
