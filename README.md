@@ -151,11 +151,11 @@ The frontend folder is reserved for the user interface of the habit tracker appl
 
 The goals of this repository include:
 
-- Improving programming skills
-- Practicing algorithms and data structures
-- Learning backend development
-- Building real-world web applications
-- Writing clean and maintainable code
+- [x] Improving programming skills
+- [x] Practicing algorithms and data structures
+- [ ] Learning backend development
+- [ ] Building real-world web applications
+- [ ] Writing clean and maintainable code
 
 ---
 
