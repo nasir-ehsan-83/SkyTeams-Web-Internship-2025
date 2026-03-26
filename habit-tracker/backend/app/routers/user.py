@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status
-from backend.app.schemas.user import UserCreate, UserOut
-from backend.app.services.user_service import create_user
+from app.schemas.user import UserCreate, UserOut
+from app.services.user_service import create_user
 
 router = APIRouter(
     prefix = '/user',

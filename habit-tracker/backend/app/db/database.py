@@ -1,9 +1,9 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
 
-from backend.app.core.confing import settings
-from backend.app.models.user import User
-from backend.app.models.habit import Habit
+from app.core.confing import settings
+from app.models.user import User
+from app.models.habit import Habit
 
 async def init_db():
     client = AsyncIOMotorClient( f'mongodb://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}')
