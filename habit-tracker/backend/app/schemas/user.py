@@ -9,7 +9,7 @@ class UserBase(BaseModel):
 class UserCreate(BaseModel):
     password: str = Field(min_length = 8)
 
-class UserResponse(BaseModel):
+class UserOut(BaseModel):
     id: Optional[str] = Field(alias = "_id")
     created_at: datetime
     is_active: bool
