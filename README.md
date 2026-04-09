@@ -1,24 +1,23 @@
-# SkyTeams Web Internship 2025 – Nasir Ahmad Ehsan
+# 🌐 SkyTeams Web Internship 2025 – Nasir Ahmad Ehsan
 
-This repository contains my work and practice during the **SkyTeams Web Internship 2025**.  
-
-The main goal of this repository is to improve my skills in **web development**, **backend development**, **algorithms**, and **data structures**.
+This repository showcases my work during the **SkyTeams Web Internship 2025**, combining **algorithm practice**, **data structure implementations**, and a real-world project — a **Habit Tracker application**.  
+The aim is to strengthen skills in **backend development, frontend development, and computer science fundamentals**.
 
 ---
 
-## Table of Contents
+## 📑 Table of Contents
 - [Repository Structure](#repository-structure)
-- [Algorithms and Data Structures](#algorithms-and-data-structures)
+- [Algorithms & Data Structures](#algorithms--data-structures)
 - [Tests](#tests)
 - [Habit Tracker Project](#habit-tracker-project)
 - [Technologies Used](#technologies-used)
-- [Goals of This Repository](#goals-of-this-repository)
+- [Goals](#goals)
 - [Future Improvements](#future-improvements)
 - [Author](#author)
 
 ---
 
-## Repository Structu‍‍re
+## 🏗 Repository Structure
 ```
 SkyTeams-Web-Internship-2025-NasirAhmadEhsan
 │
@@ -28,6 +27,7 @@ SkyTeams-Web-Internship-2025-NasirAhmadEhsan
 │   │   ├── fastapi_offline_docs/
 │   │   └── requirements.txt
 │   └── frontend/
+│
 ├── data_structure_algorithm/
 │   ├── algorithm/
 │   │   ├── week1/
@@ -40,24 +40,24 @@ SkyTeams-Web-Internship-2025-NasirAhmadEhsan
 │   └── tests/
 │       ├── algorithm/
 │       └── data_structure/
+│
 ├── LICENSE
 └── README.md
-
 ```
 
 ---
 
-## Algorithms and Data Structures
+## 📘 Algorithms & Data Structures
 
-This section contains implementations and exercises related to **Algorithms** and **Data Structures**.
+This section contains weekly exercises and implementations to practice **algorithmic thinking** and **data structure design**.
 
-### Algorithm Topics
-- Sorting algorithms
-- Searching algorithms
+### 🔹 Algorithm Topics
+- Sorting (bubble, merge, quicksort)
+- Searching (linear, binary)
 - Basic problem solving
-- Algorithm analysis
+- Complexity analysis
 
-**Folders:**
+**Structure:**
 ```
 data_structure_algorithm/algorithm
 ├── week1
@@ -67,17 +67,13 @@ data_structure_algorithm/algorithm
 ```
 
 
-Each week contains exercises and implementations related to algorithmic thinking.
-
-### Data Structure Topics
-- Arrays
-- Lists
-- Stacks
-- Queues
+### 🔹 Data Structure Topics
+- Arrays & Lists
+- Stacks & Queues
 - Trees
 - Graph basics
 
-**Folders:**
+**Structure:**
 ```
 data_structure_algorithm/data_structure
 ├── week5
@@ -86,97 +82,81 @@ data_structure_algorithm/data_structure
 
 ---
 
-## Tests
+## 🧪 Tests
 
-Test files are provided to verify algorithm and data structure implementations.
+Unit tests validate algorithm and data structure implementations:
 
-**Folders:**
 ```
 data_structure_algorithm/tests
 ├── algorithm
 └── data_structure
 ```
 
-These tests help ensure correctness of the implementations.
+These ensure correctness and reliability of the solutions.
 
 ---
 
-## Habit Tracker Project
+## 📊 Habit Tracker Project
 
-A simple habit tracking web application built with **separate frontend and backend architecture**.
-
-**Project folder:**
-```
-habit-tracker
-├── backend
-└── frontend
-```
-
+A **habit tracking web application** designed with separate backend and frontend layers.
 
 ### Backend
+- Framework: **FastAPI**
+- Database: **MongoDB** with **Beanie ODM**
+- Features:
+  - RESTful API endpoints
+  - Habit management logic
+  - Modular project structure
+  - Offline API documentation
 
-The backend is implemented using **FastAPI**.
-
-**Backend structure:**
 ```
-backend
+habit-tracker/backend
 ├── app
 ├── fastapi_offline_docs
 └── requirements.txt
 ```
 
-
-**Features:**
-- REST API
-- Habit management
-- Modular project structure
-- Offline API documentation
-
 ### Frontend
+- Framework: **React**
+- Status: Incomplete, planned for user-friendly habit tracking interface
 
-The frontend folder is reserved for the user interface of the habit tracker application.
+habit-tracker/frontend
 
 ---
 
-## Technologies Used
-
+## 🛠 Technologies Used
 - Python
 - FastAPI
-- Git
+- MongoDB + Beanie ODM
+- React
+- Git & GitHub
 - Linux (Fedora)
 
 ---
 
-## Goals of This Repository
-
-The goals of this repository include:
-
-- [x] Improving programming skills
-- [x] Practicing algorithms and data structures
-- [ ] Learning backend development
-- [ ] Building real-world web applications
-- [ ] Writing clean and maintainable code
+## 🎯 Goals
+- [x] Strengthen programming fundamentals  
+- [x] Practice algorithms and data structures  
+- [ ] Build a complete backend with FastAPI + MongoDB  
+- [ ] Implement a functional frontend with React  
+- [ ] Write clean, maintainable, and testable code  
 
 ---
 
-## Future Improvements
-
-Possible future improvements include:
-
-- Completing frontend implementation
-- Adding database integration
-- Improving API design
-- Adding more algorithm problems
-- Increasing test coverage
+## 🔮 Future Improvements
+- Complete frontend implementation  
+- Enhance backend with full database integration  
+- Improve API design and documentation  
+- Add more algorithmic challenges  
+- Expand test coverage for reliability  
 
 ---
 
-## Author
+## 👨‍💻 Author
+**Nasir Ahmad Ehsan**  
 
-**Nasir Ahmad Ehsan**
-
-**Interested in:**
-- Backend Development
-- Programming Languages
-- Artificial Intelligence
-- Operating System Design
+**Interests:**
+- Backend Development  
+- Programming Languages  
+- Artificial Intelligence  
+- Operating System Design  
