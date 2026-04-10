@@ -134,8 +134,11 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
-# Environments
+# Environments varibles
 .env
+.env.local
+.env.development
+.env.production
 .envrc
 .venv
 env/
@@ -144,6 +147,7 @@ ENV/
 env.bak/
 venv.bak/
 fsapi/
+
 
 # Spyder project settings
 .spyderproject
@@ -212,3 +216,27 @@ __marimo__/
 .vscode/
 *.swp
 *.swo
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Frontend (Vite/React)
+frontend/dist/
+
+# Backend (if any build output)
+backend/dist/
