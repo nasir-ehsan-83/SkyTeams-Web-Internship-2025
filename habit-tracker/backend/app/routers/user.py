@@ -19,12 +19,12 @@ async def get_user_id(email: str) -> User:
     
     return await get_user_by_email(email)
 
-@router.put('email/{email}', response_model = UserUpdate)
-async def update_user(email: str, updated_user: UserUpdate) -> User :
+@router.put('/email/{email}', response_model = UserOut)
+async def update_user(email: str, user_update: UserUpdate) -> User :
+    print(user_update)
+    return await update_user_by_email(email, user_update)
 
-    return await update_user_by_email(email, updated_user)
-
-@router.delete('/email/{email}', response_model = status.HTTP_204_NO_CONTENT)
+@router.delete('/email/{email}')
 async def delete_user(email: str):
 
     return await delete_user_by_id(email)
