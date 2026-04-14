@@ -5,9 +5,9 @@ from app.core.confing import settings
 from app.models.user import User
 
 async def init_db():
-    client = AsyncIOMotorClient( f'mongodb://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}')
+    client = AsyncIOMotorClient(settings.MONGO_URL)
 
     await init_beanie(
-        database = client[settings.database_name],
+        database = client[settings.DATABASE_NAME],
         document_models = [User]
     )
