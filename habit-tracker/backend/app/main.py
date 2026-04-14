@@ -9,13 +9,15 @@ async def lifespan(app: FastAPI):
     await init_db()
     yield
 """
-app = FastAPI()
-setup_offline_docs(app)
+from contextlib import asynccontextmanager
 
-@app.on_event("startup")
-async def get_db():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     await init_db()
     yield
+    pass
 
+app = FastAPI(docs_url=False, redoc_url=False, lifespan=lifespan)
+setup_offline_docs(app)
 
 app.include_router(user.router)
