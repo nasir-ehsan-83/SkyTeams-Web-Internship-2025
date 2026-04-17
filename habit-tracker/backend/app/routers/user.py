@@ -16,7 +16,7 @@ async def create_new_user(user_in: UserCreate) -> User:
 
 @router.get('/{email}', response_model = UserOut)
 async def get_user_id(email: str) -> User:
-    
+    print(email)
     return await get_user_by_email(email)
 
 @router.put('/email/{email}', response_model = UserOut)
