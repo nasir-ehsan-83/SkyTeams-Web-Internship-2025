@@ -6,7 +6,8 @@ from app.schemas.user import UserCreate, UserUpdate
 from app.models.user import User
 
 async def create_user(user_in: UserCreate):
-    exists_email = await User.find_one(User.email == user_in.email)
+    print(user_in)
+    exists_email = await User.find_one({"email": user_in.email})
 
     if exists_email:
         raise HTTPException(
@@ -14,7 +15,7 @@ async def create_user(user_in: UserCreate):
             detail = f"User with email: {user_in.email} already exists"
         )
     
-    exists_username = await User.find_one(User.username == user_in.username)
+    exists_username = await User.find_one({"username": user_in.username})
 
     if exists_username:
         raise HTTPException(
@@ -44,7 +45,7 @@ async def create_user(user_in: UserCreate):
         )
 
 async def get_user_by_email(user_in_email: str) -> User:
-    user = await User.find_one(User.email == user_in_email)
+    user = await User.find_one({"email": user_in_email})
 
     if not user:
         raise HTTPException(
