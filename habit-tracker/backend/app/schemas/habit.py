@@ -6,15 +6,15 @@ class HabitBase(BaseModel):
     name: str = Field(min_length = 3, max_length = 50)
     status: str
     
-    start_date: datetime
-    end_date: datetime
+    start_date: datetime = Field(default = datetime.utcnow)
+    end_date: datetime = Field(default = datetime.utcnow)
 
 class HabitCreate(HabitBase):
     pass
 
 class HabitOut(HabitBase):
-    id: int
-    owner_id: int
+    _id: int
+    #owner_id: int
     created_at: datetime
     updated_at: datetime
 
