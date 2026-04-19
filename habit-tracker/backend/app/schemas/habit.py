@@ -24,5 +24,5 @@ class HabitUpdate(BaseModel):
     name: Optional[str] = Field(default = None, min_lenght = 3, max_length = 50)
     status: Optional[str] = Field(default = None)
     
-    star_date: Optional[datetime] = Field(default = None)
+    start_date: Optional[datetime] = Field(default = None)
     end_date: Optional[datetime] = Field(default = None)
