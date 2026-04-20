@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from app.models.habit import Habit
 from app.schemas.habit import HabitCreate, HabitOut, HabitUpdate
-from app.services.habit_service import (
+from app.services.habit_service import(
     create_new_habit, 
     get_habit_by_name,
     udpdate_habit_by_name,
@@ -11,7 +11,7 @@ from app.services.habit_service import (
 
 router = APIRouter(
     prefix = '/habits',
-    tags = ["habits"]
+    tags = ["Habits"]
 )
 
 @router.post('/', response_model = HabitOut)

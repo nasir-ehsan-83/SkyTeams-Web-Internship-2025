@@ -5,31 +5,37 @@ from app.models.habit import Habit
 from app.schemas.habit import HabitCreate, HabitUpdate
 
 async def create_new_habit(habit_in: HabitCreate, owner_id: int) -> Habit:
-    existance_habit = await Habit.find_one({"name": habit_in.name})
-
-    if existance_habit:
-        raise HTTPException(
-            status_code = status.HTTP_400_BAD_REQUEST, 
-            detail = f"habit with name: {habit_in.name} already exists"
-        )
+    # ۱. چک کردن دستی برای تجربه کاربری بهتر (قبل از خطای دیتابیس)
+    existing_habit = await Habit.find_one({
+        "name": habit_in.name.strip(), # پاک کردن فاصله‌های اضافی
+        "owner_id": owner_id
+    })
     
+    if existing_habit:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"You already have a habit named '{habit_in.name}'"
+        )
+
     try:
-        habit_data = habit_in.model_dump(exclude_unset = True, exclude_none = True)
-        habit_data.update({"owner_id": owner_id})
+        habit_data = habit_in.model_dump(exclude_unset=True, exclude_none=True)
+        # تبدیل زمان به رشته برای جلوگیری از خطای Beanie
+        if "remind_time" in habit_data and hasattr(habit_data["remind_time"], "strftime"):
+            habit_data["remind_time"] = habit_data["remind_time"].strftime("%H:%M")
+            
+        habit_data.update({"owner_id": owner_id, "name": habit_in.name.strip()})
         
-        new_habit = Habit(
-            **habit_data
-        )
-
+        new_habit = Habit(**habit_data)
         return await new_habit.insert()
-    
-    except DuplicateKeyError:
-        raise HTTPException(
-            status_code = status.HTTP_409_CONFLICT,
-            detail = "Data Conflict: The provided habit already exists"
-        )
-    
 
+    except DuplicateKeyError:
+        # این بخش اگر دو درخواست همزمان برسند، امنیت دیتابیس را تضمین می‌کند
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Conflict: A habit with this name already exists for this user."
+        )
+
+    
 async def get_habit_by_name(name: str, owner_id: int) -> Habit:
     existance_habit = await Habit.find_one({"name": name})
 
