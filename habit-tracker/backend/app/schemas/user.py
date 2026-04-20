@@ -14,6 +14,7 @@ class UserCreate(UserBase):
 class UserOut(UserBase):
     id: Optional[str] = Field(alias="_id")
     created_at: datetime
+    updated_at: datetime
     is_active: bool
 
     model_config = ConfigDict(from_attributes=True, populate_by_name=True)
@@ -23,11 +24,11 @@ class UserOut(UserBase):
     def convert_objectid(cls, v):
         if isinstance(v, ObjectId):
             return str(v)
-        return v
-
+        return 
 
 class UserUpdate(BaseModel):
     name: Optional[str] = None
     username: Optional[str] = None
     email: Optional[EmailStr] = None
     password: Optional[str] = None
+    is_active: Optional[bool] = None
