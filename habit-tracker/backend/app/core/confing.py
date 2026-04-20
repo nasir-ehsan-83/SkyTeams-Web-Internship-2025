@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 
+# provide connection with .env file to use .env data
 class Settings(BaseSettings):
     MONGO_URL: str
     DATABASE_NAME: str
