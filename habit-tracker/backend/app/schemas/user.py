@@ -26,9 +26,13 @@ class UserOut(UserBase):
             return str(v)
         return 
 
-class UserUpdate(BaseModel):
+class UserUpdateBase(BaseModel):
     name: Optional[str] = None
     username: Optional[str] = None
     email: Optional[EmailStr] = None
     password: Optional[str] = None
     is_active: Optional[bool] = None
+
+class UserUpdate(BaseModel):
+    email: EmailStr
+    update_data: UserUpdateBase
