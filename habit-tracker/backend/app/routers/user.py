@@ -5,7 +5,7 @@ from app.schemas.user import UserCreate, UserOut, UserUpdate
 from app.services.user_service import (create_user, get_user_by_email, update_user_by_email, delete_user_by_id)
 
 router = APIRouter(
-    prefix = '/user',
+    prefix = '/users',
     tags = ['User']
 )
 
@@ -19,12 +19,11 @@ async def get_user_id(email: str) -> User:
     print(email)
     return await get_user_by_email(email)
 
-@router.put('/email/{email}', response_model = UserOut)
-async def update_user(email: str, user_update: UserUpdate) -> User :
-    print(user_update)
-    return await update_user_by_email(email, user_update)
+@router.put('/email', response_model = UserOut)
+async def update_user(user_data: UserUpdate) -> User :
+    return await update_user_by_email(user_data)
 
-@router.delete('/email/{email}')
+@router.delete('/email')
 async def delete_user(email: str):
 
     return await delete_user_by_id(email)
