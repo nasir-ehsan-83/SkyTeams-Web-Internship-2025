@@ -11,11 +11,8 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str = Field(min_length = 8)
 
-class UserOut(UserBase):
-    id: Optional[str] = Field(alias="_id")
-    created_at: datetime
-    updated_at: datetime
-    is_active: bool
+class UserPrivateOut(UserBase):
+    id: Optional[str] = Field(alias = "_id")
 
     model_config = ConfigDict(from_attributes=True, populate_by_name=True)
 
@@ -25,6 +22,22 @@ class UserOut(UserBase):
         if isinstance(v, ObjectId):
             return str(v)
         return 
+
+class UserAdminOut(UserBase):
+    id: str = Field(aliase = "_id")
+    created_at: datetime
+    updated_at: datetime
+    is_active: bool
+    
+    model_config = ConfigDict(from_attributes=True, populate_by_name=True)
+
+    @field_validator("id", mode="before")
+    @classmethod
+    def convert_objectid(cls, v):
+        if isinstance(v, ObjectId):
+            return str(v)
+        return 
+
 
 class UserUpdateBase(BaseModel):
     name: Optional[str] = None
