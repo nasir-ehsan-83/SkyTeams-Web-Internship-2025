@@ -45,6 +45,12 @@ async def create_user(user: UserCreate):
             detail = f"Data conflict: The provided credentials are already in use."
         )
 
+async def get_all_users():
+    # get all users from database
+    users = await User.find_all()
+
+    return users
+
 async def get_user_by_email(email: str) -> User:
     user = await User.find_one({"email": email})
 
