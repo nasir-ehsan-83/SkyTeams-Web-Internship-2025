@@ -1,3 +1,4 @@
+from typing import List, Optional
 from fastapi import HTTPException, Response, status
 from pymongo.errors import DuplicateKeyError
 
@@ -5,9 +6,9 @@ from app.models.habit import Habit
 from app.schemas.habit import HabitCreate, HabitUpdate
 
 async def create_new_habit(habit_in: HabitCreate, owner_id: int) -> Habit:
-    # ۱. چک کردن دستی برای تجربه کاربری بهتر (قبل از خطای دیتابیس)
+   
     existing_habit = await Habit.find_one({
-        "name": habit_in.name.strip(), # پاک کردن فاصله‌های اضافی
+        "name": habit_in.name.strip(),
         "owner_id": owner_id
     })
     
@@ -19,7 +20,7 @@ async def create_new_habit(habit_in: HabitCreate, owner_id: int) -> Habit:
 
     try:
         habit_data = habit_in.model_dump(exclude_unset=True, exclude_none=True)
-        # تبدیل زمان به رشته برای جلوگیری از خطای Beanie
+        
         if "remind_time" in habit_data and hasattr(habit_data["remind_time"], "strftime"):
             habit_data["remind_time"] = habit_data["remind_time"].strftime("%H:%M")
             
@@ -29,15 +30,32 @@ async def create_new_habit(habit_in: HabitCreate, owner_id: int) -> Habit:
         return await new_habit.insert()
 
     except DuplicateKeyError:
-        # این بخش اگر دو درخواست همزمان برسند، امنیت دیتابیس را تضمین می‌کند
+       
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="Conflict: A habit with this name already exists for this user."
         )
 
+async def get_all_habits_owner(owner_id: int) -> List[Habit]:
+    # get all habits of users
+    habits = await Habit.find_all({"owner_id": owner_id})
     
+    return habits
+
+async def get_all_habits_admin(owner_id: Optional[int] = None) -> List[Habit]:
+    # get all habits of specific user
+    if owner_id is not None:
+        habits = await Habit.find_all({"owner_id": owner_id})
+
+        return habits
+
+    # else get all habits of all users 
+    habits = await Habit.find_all()
+
+    return habits
+
 async def get_habit_by_name(name: str, owner_id: int) -> Habit:
-    existance_habit = await Habit.find_one({"name": name})
+    existance_habit = await Habit.find_one({"name": name, "owner_id": owner_id})
 
     if not existance_habit:
         raise HTTPException(
@@ -48,7 +66,7 @@ async def get_habit_by_name(name: str, owner_id: int) -> Habit:
     return existance_habit
 
 async def udpdate_habit_by_name(name: str, update_habit: HabitUpdate, owener_id: int) -> Habit:
-    existance_habit = await Habit.find_one({"name": name})
+    existance_habit = await Habit.find_one({"name": name, "owner_id": owener_id})
 
     if not existance_habit:
         raise HTTPException(
