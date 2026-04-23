@@ -12,7 +12,10 @@ class HabitBase(BaseModel):
 class HabitCreate(HabitBase):
     pass
 
-class HabitOut(HabitBase):
+class HabitPrivateOut(HabitBase):
+    pass
+
+class HabitAdminOut(HabitBase):
     _id: int
     owner_id: int
     created_at: date
