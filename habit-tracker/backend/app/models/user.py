@@ -3,13 +3,15 @@ from pydantic import EmailStr, Field
 from pymongo import IndexModel, ASCENDING
 from beanie import Document
 
+from app.core.enum import UserRole, UserStatus
+
 class User(Document):
     name: str
     username: str
     email: EmailStr  
     password: str
-    role: str = "user"
-    status: str = "active"
+    role: UserRole = UserRole.user
+    status: UserStatus = UserStatus.active
     
     created_at: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
