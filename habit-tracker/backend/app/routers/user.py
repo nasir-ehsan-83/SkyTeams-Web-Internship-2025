@@ -1,6 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from typing import List
 
+from app.dependencies.current_user import get_current_user
 from app.models.user import User
 from app.schemas.user import UserCreate, UserPrivateOut, UserAdminOut, UserUpdate
 from app.services.user_service import (
@@ -8,7 +9,7 @@ from app.services.user_service import (
     get_all_users,
     get_user_by_email, 
     update_user_by_email, 
-    delete_user_by_id
+    delete_user_by_email
 )
 
 router = APIRouter(
@@ -16,26 +17,32 @@ router = APIRouter(
     tags = ['User']
 )
 
+# create new user
 @router.post('/', response_model = UserPrivateOut)
 async def create_new_user(user_in: UserCreate) -> User:
     
     return await create_user(user_in)
 
+# get all users's information by admin access
 @router.get('/', response_model = List[UserAdminOut])
-async def get_users() -> User:
+async def get_users() -> List[User]:
 
     return await get_all_users()
 
+# get user's information by email and owner access
 @router.get('/email', response_model = UserPrivateOut)
-async def get_user_email(email: str) -> User:
+async def get_user_email(email: str, current_user: int = Depends(get_current_user)) -> User:
 
-    return await get_user_by_email(email)
+    return await get_user_by_email(email, current_user)
 
+# update user's information by email and owner acccess
 @router.put('/email', response_model = UserPrivateOut)
-async def update_user(user_data: UserUpdate) -> User :
-    return await update_user_by_email(user_data)
+async def update_user(user_data: UserUpdate, current_user: int = Depends(get_current_user)) -> User :
 
+    return await update_user_by_email(user_data, current_user)
+
+# delete user's information by email and owner access
 @router.delete('/email')
-async def delete_user(email: str):
+async def delete_user(email: str, current_user: int = Depends(get_current_user)):
 
-    return await delete_user_by_id(email)
+    return await delete_user_by_email(email, current_user)
