@@ -2,9 +2,11 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict, Field
 from datetime import date, time
 
+from app.core.enum import HabitStatus
+
 class HabitBase(BaseModel):
     name: str = Field(min_length = 3, max_length = 50)
-    status: str
+    status: HabitStatus
     remind_time: time
     start_date: date
     end_date: date
@@ -25,7 +27,7 @@ class HabitAdminOut(HabitBase):
 
 class HabitUpdate(BaseModel):
     name: Optional[str] = Field(default = None, min_lenght = 3, max_length = 50)
-    status: Optional[str] = Field(default = None)
+    status: Optional[HabitStatus] = Field(default = None)
     remind: Optional[time] = Field(default = None)
     start_date: Optional[date] = Field(default = None)
     end_date: Optional[date] = Field(default = None)
