@@ -8,7 +8,7 @@ from app.core.oauth2 import create_access_token
 
 async def login(user_credential: OAuth2PasswordRequestForm) :
     # get user from database
-    existance_user = await User.find_one({"usrename": user_credential.username})
+    existance_user = await User.find_one({"username": user_credential.username})
 
     # if specific user does not exist
     if not existance_user:
@@ -26,7 +26,7 @@ async def login(user_credential: OAuth2PasswordRequestForm) :
         )
 
     # create JWT token
-    access_token = create_access_token(data = {"user_id": existance_user.id})
+    access_token = await create_access_token(data = {"user_id": existance_user.id})
 
     return {
         "access_token": access_token,

@@ -31,7 +31,7 @@ async def verify_access_token(token: str, credentials_exception):
             jwt.decode,
             token,
             SECRET_KEY,
-            algorithm = ALGORITHM
+            algorithm = [ALGORITHM]
         )
 
         user_id: str = payload.get("user_id")
