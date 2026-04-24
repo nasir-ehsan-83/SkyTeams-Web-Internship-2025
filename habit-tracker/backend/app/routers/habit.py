@@ -1,7 +1,8 @@
 from typing import List, Optional
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 from app.models.habit import Habit
+from app.dependencies.current_user import get_current_user
 from app.schemas.habit import HabitCreate, HabitPrivateOut, HabitAdminOut, HabitUpdate
 from app.services.habit_service import(
     create_new_habit,
@@ -17,15 +18,15 @@ router = APIRouter(
 )
 
 @router.post('/', response_model = HabitPrivateOut)
-async def create_habit(habit: HabitCreate, owner_id: int) -> Habit:
-    print(habit)
-    return await create_new_habit(habit, owner_id)
+async def create_habit(habit: HabitCreate, current_user: int = Depends(get_current_user)) -> Habit:
+    
+    return await create_new_habit(habit, current_user)
 
 # get all habits of specific user by  owner access
 @router.get('/', response_model = List[HabitAdminOut])
-async def get_habits_owner(owner_id: int) -> List[Habit]:
+async def get_habits_owner(current_user: int = Depends(get_current_user)) -> List[Habit]:
     
-    return await get_habits_owner(owner_id)
+    return await get_habits_owner(current_user)
 
 # get all habits of all usres by admin access
 @router.get('/all', response_model = List[HabitPrivateOut])
@@ -34,16 +35,16 @@ async def get_habits_admin(owner_id: Optional[int] = None) -> List[Habit]:
     return await get_all_habits_admin(owner_id)
 
 @router.get('/name', response_model = HabitPrivateOut)
-async def get_habit(name: str, owner_id: int) -> Habit:
+async def get_habit(name: str, current_user: int = Depends(get_current_user)) -> Habit:
 
-    return await get_habit_by_name(name, owner_id)
+    return await get_habit_by_name(name, current_user)
 
 @router.put('/name', response_model = HabitPrivateOut)
-async def update_habit(name: str, update_habit: HabitUpdate, owner_id: int) -> Habit:
+async def update_habit(name: str, update_habit: HabitUpdate, current_user: int = Depends(get_current_user)) -> Habit:
     
-    return await udpdate_habit_by_name(name, update_habit, owner_id)
+    return await udpdate_habit_by_name(name, update_habit, current_user)
 
 @router.delete('/name')
-async def delete_habit(name: str, owner_id: int) :
+async def delete_habit(name: str, current_user: int = Depends(get_current_user)) :
 
-    return await delete_habit_by_name(name, owner_id)
+    return await delete_habit_by_name(name, current_user)
