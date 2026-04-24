@@ -17,4 +17,8 @@ async def verify(plain_password: str, hashed_password: str) -> bool:
     if not hashed_password:
         return False
     
-    return await password_context.verify(plain_password, hashed_password)
+    return await run_in_threadpool(
+        password_context.verify,
+        plain_password,
+        hashed_password
+    )
