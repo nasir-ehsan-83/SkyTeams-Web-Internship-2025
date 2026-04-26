@@ -26,7 +26,10 @@ async def login(user_credential: OAuth2PasswordRequestForm) :
         )
 
     # create JWT token
-    access_token = await create_access_token(data = {"user_id": existance_user.id})
+    access_token = await create_access_token(data = {
+        "user_id": existance_user.id,
+        "role": existance_user.role
+    })
 
     return {
         "access_token": access_token,

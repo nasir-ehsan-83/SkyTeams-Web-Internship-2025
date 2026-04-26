@@ -34,12 +34,13 @@ async def verify_access_token(token: str, credentials_exception):
             algorithm = [ALGORITHM]
         )
 
-        user_id: str = payload.get("user_id")
+        id: str = payload.get("user_id")
+        role: str = payload.get("role")
 
-        if user_id is None:
+        if id is None or role is None:
             raise credentials_exception
         
-        token_data = TokenData(id = str(user_id))
+        token_data = TokenData(id = str(id), role = role)
 
     except JWTError:
         raise credentials_exception
