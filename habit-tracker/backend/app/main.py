@@ -7,13 +7,15 @@ from app.routers import user, habit
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # This runs when the app starts
     await init_db() 
     yield
-    # This runs when the app stops (optional)
-    pass
 
-app = FastAPI(docs_url=False, redoc_url=False, lifespan=lifespan)
+app = FastAPI(
+    docs_url = False, 
+    redoc_url = False, 
+    lifespan = lifespan
+)
+
 setup_offline_docs(app)
 
 app.include_router(user.router)
