@@ -1,4 +1,4 @@
-from datetime import datetime, timezone, date
+from datetime import datetime, timezone, date, time
 from pydantic import Field, model_validator
 from beanie import Document
 from pymongo import ASCENDING, IndexModel
@@ -10,21 +10,21 @@ class Habit(Document):
     owner_id: int
     status: HabitStatus = HabitStatus.pending
     
-    remind_time: str 
+    remind_time: time 
     start_date: date
     end_date: date
     
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
 
-    @model_validator(mode="after")
+    @model_validator(mode = "after")
     def validate_dates(self):
         
         if self.end_date < self.start_date:
-            raise ValueError("end date should not be before start date")
+            raise ValueError("end_date cannot be before start_date")
         
         if self.start_date < date.today():
-            raise ValueError("start date should not be in the past")
+            raise ValueError("start_date cannot be before today")
             
         return self
 
@@ -34,7 +34,6 @@ class Habit(Document):
         indexes = [
             IndexModel(
                 [("name", ASCENDING), ("owner_id", ASCENDING)],
-                unique=True,
-                name="unique_habit_name_per_user"
+                unique = True
             )
         ]

@@ -10,6 +10,7 @@ class User(Document):
     username: str
     email: EmailStr  
     password: str
+
     role: UserRole = UserRole.user
     status: UserStatus = UserStatus.active
     
@@ -20,6 +21,6 @@ class User(Document):
         name = "users"
         # Correct way to define unique indexes in Beanie Settings
         indexes = [
-            IndexModel([("email", ASCENDING)], unique=True),
-            IndexModel([("username", ASCENDING)], unique=True),
+            IndexModel([("email", ASCENDING)], unique = True),
+            IndexModel([("username", ASCENDING)], unique = True),
         ]
