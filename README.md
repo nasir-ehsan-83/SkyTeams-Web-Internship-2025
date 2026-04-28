@@ -1,4 +1,4 @@
-# 🌐 SkyTeams Web Internship 2025 
+# 🌐 SkyTeams Web Internship 
 
 This repository showcases my work during the **SkyTeams Web Internship 2025**, combining **algorithm practice**, **data structure implementations**, and a real-world project — a **Habit Tracker application**.  
 The aim is to strengthen skills in **backend development, frontend development, and computer science fundamentals**.
