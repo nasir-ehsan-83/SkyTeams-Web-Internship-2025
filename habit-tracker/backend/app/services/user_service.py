@@ -1,10 +1,15 @@
-from fastapi import HTTPException, Response, status
+from fastapi import (
+    HTTPException, 
+    Response, 
+    status
+)
 from pymongo.errors import DuplicateKeyError
 from datetime import datetime, timezone
 
 from app.core.security import hash
-from app.schemas.user import UserCreate, UserUpdate
 from app.models.user import User
+from app.schemas.user import UserCreate, UserUpdate
+from app.schemas.token import TokenData
 
 # create new user and add to database
 async def create_user(user: UserCreate):
@@ -47,7 +52,7 @@ async def get_all_users():
 
 
 # get user's information by email and owner access
-async def get_user_by_email(email: str, current_user: int) -> User:
+async def get_user_by_email(email: str, current_user: TokenData) -> User:
     # get user from database 
     user = await User.find_one(
         User.email == email,
@@ -67,7 +72,7 @@ async def get_user_by_email(email: str, current_user: int) -> User:
 
 
 # update user's information by email and owner access
-async def update_user_by_email(data: UserUpdate, current_user: int) -> User:
+async def update_user_by_email(data: UserUpdate, current_user: TokenData) -> User:
     # get user from database
     user = await User.find_one(
         User.email == data.email,
@@ -95,14 +100,16 @@ async def update_user_by_email(data: UserUpdate, current_user: int) -> User:
     update_data["updated_at"] = datetime.now(timezone.utc)
 
     # add updated information to the database
-    await user.update({ "$set" : update_data})
+    await user.update({ 
+        "$set" : update_data
+    })
 
     # get user by updated infromation
     return await User.get(user.id)
 
 
 # delete user from database
-async def delete_user_by_email(email: str, current_user: int):
+async def delete_user_by_email(email: str, current_user: TokenData):
     # find the user from database
     user = await User.find_one(
         User.email == email,
@@ -118,6 +125,10 @@ async def delete_user_by_email(email: str, current_user: int):
         )
     
     # change the user'status to deleted 
-    await user.update({"$set": {"status": "deleted"}})
+    await user.update({
+        "$set": {
+            "status": "deleted"
+        }
+    })
 
     return Response(status_code = status.HTTP_204_NO_CONTENT)

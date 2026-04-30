@@ -3,7 +3,13 @@ from typing import List
 
 from app.dependencies.current_user import get_current_user
 from app.models.user import User
-from app.schemas.user import UserCreate, UserPrivateOut, UserAdminOut, UserUpdate
+from app.schemas.token import TokenData
+from app.schemas.user import (
+    UserCreate, 
+    UserPrivateOut, 
+    UserAdminOut, 
+    UserUpdate
+)
 from app.services.user_service import (
     create_user, 
     get_all_users,
@@ -31,18 +37,18 @@ async def get_users() -> List[User]:
 
 # get user's information by email and owner access
 @router.get('/email', response_model = UserPrivateOut)
-async def get_user_email(email: str, current_user: int = Depends(get_current_user)) -> User:
+async def get_user_email(email: str, current_user: TokenData = Depends(get_current_user)) -> User:
 
     return await get_user_by_email(email, current_user)
 
 # update user's information by email and owner acccess
 @router.put('/email', response_model = UserPrivateOut)
-async def update_user(user_data: UserUpdate, current_user: int = Depends(get_current_user)) -> User :
+async def update_user(user_data: UserUpdate, current_user: TokenData = Depends(get_current_user)) -> User :
 
     return await update_user_by_email(user_data, current_user)
 
 # delete user's information by email and owner access
 @router.delete('/email')
-async def delete_user(email: str, current_user: int = Depends(get_current_user)):
+async def delete_user(email: str, current_user: TokenData = Depends(get_current_user)):
 
     return await delete_user_by_email(email, current_user)
