@@ -1,6 +1,6 @@
 # 🌐 SkyTeams Web Internship 
 
-This repository showcases my work during the **SkyTeams Web Internship 2025**, combining **algorithm practice**, **data structure implementations**, and a real-world project — a **Habit Tracker application**.  
+This repository showcases my work during the **SkyTeams Web Internship**, combining **algorithm practice**, **data structure implementations**, and a real-world project — a **Habit Tracker application**.  
 The aim is to strengthen skills in **backend development, frontend development, and computer science fundamentals**.
 
 ---
@@ -55,7 +55,6 @@ This section contains weekly exercises and implementations to practice **algorit
 - Sorting (bubble, merge, quicksort)
 - Searching (linear, binary)
 - Basic problem solving
-- Complexity analysis
 
 **Structure:**
 ```
@@ -71,7 +70,6 @@ data_structure_algorithm/algorithm
 - Arrays & Lists
 - Stacks & Queues
 - Trees
-- Graph basics
 
 **Structure:**
 ```
@@ -157,6 +155,4 @@ habit-tracker/frontend
 
 **Interests:**
 - Backend Development  
-- Programming Languages  
-- Artificial Intelligence  
-- Operating System Design  
+- Artificial Intelligence   
