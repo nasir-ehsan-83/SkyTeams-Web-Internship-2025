@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 from typing import List
 
 from app.dependencies.current_user import get_current_user
+from app.dependencies.roles import require_role
 from app.models.user import User
 from app.schemas.token import TokenData
 from app.schemas.user import (
@@ -30,8 +31,8 @@ async def create_new_user(user_in: UserCreate) -> User:
     return await create_user(user_in)
 
 # get all users's information by admin access
-@router.get('/', response_model = List[UserAdminOut])
-async def get_users() -> List[User]:
+@router.get('/admin-only', response_model = List[UserAdminOut])
+async def get_users(user = Depends(require_role("admin"))) -> List[User]:
 
     return await get_all_users()
 
