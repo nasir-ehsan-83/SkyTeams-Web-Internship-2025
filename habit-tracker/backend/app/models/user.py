@@ -3,7 +3,7 @@ from pydantic import EmailStr, Field
 from pymongo import IndexModel, ASCENDING
 from beanie import Document
 
-from app.core.enum import UserRole, UserStatus
+from app.utils.enum import UserRole, UserStatus
 
 class User(Document):
     name: str

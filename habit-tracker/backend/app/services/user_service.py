@@ -47,13 +47,8 @@ async def create_user(user: UserCreate):
 
 
 # get all users from database by admin access
-async def get_all_users(current_user: TokenData, page: int = 1, limit: int = 10):
-    # if admin authenticated 
-    if current_user.role is not "admin":
-        raise HTTPException(
-            status_code = status.HTTP_401_UNAUTHORIZED,
-            detail = "Access denied" 
-        )
+async def get_all_users(page: int = 1, limit: int = 10):
+    
     
     skip, limit = paginate(page, limit)
     # get all users from database

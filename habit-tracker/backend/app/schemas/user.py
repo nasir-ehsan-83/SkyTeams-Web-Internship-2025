@@ -3,7 +3,7 @@ from pydantic import BaseModel, EmailStr, ConfigDict, Field, field_validator
 from datetime import datetime
 from bson import ObjectId 
 
-from app.core.enum import UserStatus, UserRole
+from app.utils.enum import UserStatus, UserRole
 
 class UserBase(BaseModel):
     name: str = Field(min_length = 3, max_length = 50)

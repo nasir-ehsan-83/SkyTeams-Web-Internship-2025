@@ -3,7 +3,7 @@ from pydantic import Field, model_validator
 from beanie import Document
 from pymongo import ASCENDING, IndexModel
 
-from app.core.enum import HabitStatus
+from app.utils.enum import HabitStatus
 
 class Habit(Document):
     name: str = Field(min_length=1)
