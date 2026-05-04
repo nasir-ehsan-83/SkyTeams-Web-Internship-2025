@@ -32,9 +32,9 @@ async def create_new_user(user_in: UserCreate) -> User:
 
 # get all users's information by admin access
 @router.get('/admin-only', response_model = List[UserAdminOut])
-async def get_users(current_user = Depends(require_role("admin"))) -> List[User]:
+async def get_users(current_user = Depends(require_role("admin")), page: int = 1, limit: int = 10) -> List[User]:
 
-    return await get_all_users(current_user)
+    return await get_all_users(current_user, page, limit)
 
 # get user's information by email and owner access
 @router.get('/email', response_model = UserPrivateOut)
