@@ -46,10 +46,16 @@ async def create_user(user: UserCreate):
 
 
 # get all users from database by admin access
-async def get_all_users():
-    # get all users from database
-    return await User.find_all().to_list()
+async def get_all_users(current_user: TokenData):
+    # if admin authenticated 
+    if current_user.role is "admin":
+        # get all users from database
+        return await User.find_all().to_list() 
 
+    raise HTTPException(
+        status_code = status.HTTP_401_UNAUTHORIZED,
+        detail = "Access denied" 
+    )
 
 # get user's information by email and owner access
 async def get_user_by_email(email: str, current_user: TokenData) -> User:
