@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends
 
 from app.models.habit import Habit
 from app.dependencies.current_user import get_current_user
+from app.dependencies.roles import require_role
 from schemas.token import TokenData
 from app.schemas.habit import (
     HabitCreate, 
@@ -39,8 +40,8 @@ async def get_habits_owner(current_user: TokenData = Depends(get_current_user)) 
 
 
 # get all habits of all usres by admin access
-@router.get('/all', response_model = List[HabitPrivateOut])
-async def get_habits_admin(owner_id: Optional[int] = None) -> List[Habit]:
+@router.get('/only-admin', response_model = List[HabitPrivateOut])
+async def get_habits_admin(owner_id: Optional[int] = None, user = Depends(require_role("admin"))) -> List[Habit]:
     
     return await get_all_habits_admin(owner_id)
 
