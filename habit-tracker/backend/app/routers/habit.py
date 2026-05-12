@@ -13,6 +13,7 @@ from app.schemas.habit import (
 )
 from app.services.habit_service import(
     create_new_habit,
+    get_all_habits_owner,
     get_all_habits_admin, 
     get_habit_by_name,
     udpdate_habit_by_name,
@@ -34,16 +35,16 @@ async def create_habit(habit: HabitCreate, current_user: TokenData = Depends(get
 
 # get all habits of specific user by  owner access
 @router.get('/', response_model = List[HabitAdminOut])
-async def get_habits_owner(current_user: TokenData = Depends(get_current_user)) -> List[Habit]:
+async def get_habits_owner(current_user: TokenData = Depends(get_current_user), page: int = 1, limit: int = 10) -> List[Habit]:
     
-    return await get_habits_owner(current_user)
+    return await get_all_habits_owner(current_user, page, limit)
 
 
 # get all habits of all usres by admin access
 @router.get('/only-admin', response_model = List[HabitPrivateOut])
-async def get_habits_admin(owner_id: Optional[int] = None, user = Depends(require_role("admin"))) -> List[Habit]:
+async def get_habits_admin(owner_id: Optional[int] = None, page: int = 1, limit: int = 10, user = Depends(require_role("admin"))) -> List[Habit]:
     
-    return await get_all_habits_admin(owner_id)
+    return await get_all_habits_admin(owner_id, page, limit)
 
 
 @router.get('/name', response_model = HabitPrivateOut)

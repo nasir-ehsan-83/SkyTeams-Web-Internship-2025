@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from app.models.habit import Habit
 from app.schemas.habit import HabitCreate, HabitUpdate
 from app.schemas.token import TokenData
+from app.utils.pagination import paginate
 
 async def create_new_habit(habit_in: HabitCreate, current_user: TokenData) -> Habit:
     # get habit from database by specific owner
@@ -38,24 +39,22 @@ async def create_new_habit(habit_in: HabitCreate, current_user: TokenData) -> Ha
         )
 
 
-async def get_all_habits_owner(current_user: TokenData) -> List[Habit]:
+async def get_all_habits_owner(current_user: TokenData, page: int = 1, limit = 10) -> List[Habit]:
+    # calculate skip and limit values
+    skip, limit = paginate(page, limit)
     # get all habits of users
-    return  await Habit.find_all(Habit.owner_id == int(current_user.id), Habit.status != "deleted").to_list()
+    return  await Habit.find_all(Habit.owner_id == int(current_user.id), Habit.status != "deleted").skip(skip).limit(limit).to_list()
 
 
-async def get_all_habits_admin(current_user: TokenData, owner_id: Optional[int] = None) -> List[Habit]:
-    # get all habits of specific user
-    if current_user.role is not "admin":
-        raise HTTPException(
-            status_code = status.HTTP_401_UNAUTHORIZED,
-            detail = "Invalid credential"
-        )
+async def get_all_habits_admin(owner_id: Optional[int] = None, page: int = 1, limit: int = 10) -> List[Habit]:
+    # calculate skip and limit values
+    skip, limit = paginate(page, limit)
     
     if owner_id is not None:
-        return await Habit.find_all(Habit.owner_id == owner_id).to_list()
+        return await Habit.find_all(Habit.owner_id == owner_id).skip(skip).limit(limit).to_list()
 
     # else get all habits of all users 
-    return await Habit.find_all().to_list()
+    return await Habit.find_all().skip(skip).limit(limit).to_list()
 
 
 async def get_habit_by_name(name: str, current_user: int) -> Habit:
